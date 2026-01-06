@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Suisse | Account Overview</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cs-blue: #002a5c;
+      --bg-light: #f3f5f7;
+      --card-bg: #ffffff;
+      --text-dark: #1f2933;
+      --text-muted: #6b7280;
+      --positive: #2e7d32;
+      --negative: #c62828;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    header {
+      background-color: var(--cs-blue);
+      color: white;
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      height: 67px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 80px);
+    }
+
+    aside {
+      background-color: #fff;
+      border-right: 1px solid #e5e7eb;
+      padding: 30px 20px;
+    }
+
+    aside h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    aside a {
+      display: block;
+      text-decoration: none;
+      color: var(--text-dark);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    aside a.active,
+    aside a:hover {
+      background-color: #eef3f8;
+      color: var(--cs-blue);
+    }
+
+    main {
+      padding: 40px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .balance {
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+
+    .sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .primary {
+      background-color: var(--cs-blue);
+      color: white;
+    }
+
+    .secondary {
+      background-color: #eef3f8;
+      color: var(--cs-blue);
+    }
+
+    .transactions {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 10px;
+    }
+
+    .amount.pos { color: var(--positive); font-weight: 600; }
+    .amount.neg { color: var(--negative); font-weight: 600; }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 14px;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .disclaimer {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #c62828;
+      font-weight: 600;
+    }
+
+    body.modal-active > *:not(.modal) {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="crsw.png" class="logo">
+  <div>Welcome</div>
+</header>
+
+<div class="layout">
+
+<aside>
+  <h3>Accounts</h3>
+  <a class="active">Overview</a>
+  <a class="modal-trigger">Payments</a>
+  <a href="transfers.html">Transfers</a>
+  <a href="cards.html">Cards</a>
+  <a class="modal-trigger">Investments</a>
+  <a class="modal-trigger">Settings</a>
+</aside>
+
+<main>
+
+<section class="cards">
+  <div class="card">
+    <h4>Total Balance</h4>
+    <div class="balance">CHF 128,376.75</div>
+  </div>
+
+  <div class="card">
+    <h4>Checking Account</h4>
+    <div class="balance">CHF 42,330.20</div>
+    <div class="sub">•••• 4821</div>
+    <div class="actions">
+      <button class="primary modal-trigger">Transfer</button>
+      <button class="secondary details-btn"
+        data-type="Checking Account"
+        data-owner="Roland F. Moar"
+        data-number="•••• 4821">
+        Details
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Savings Account</h4>
+    <div class="balance">CHF 86,046.55</div>
+    <div class="sub">•••• 9174</div>
+    <div class="actions">
+      <button class="primary modal-trigger">Move Funds</button>
+      <button class="secondary details-btn"
+        data-type="Savings Account"
+        data-owner="Shirley Penner"
+        data-number="•••• 9174">
+        Details
+      </button>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- MODAL -->
+<div id="accessModal" class="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <div id="modalBody"></div>
+    <button id="closeModalBtn">Close</button>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('accessModal');
+const title = document.getElementById('modalTitle');
+const body = document.getElementById('modalBody');
+const closeBtn = document.getElementById('closeModalBtn');
+
+function openModal() {
+  modal.style.display = 'flex';
+  document.body.classList.add('modal-active');
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+  document.body.classList.remove('modal-active');
+}
+
+closeBtn.onclick = closeModal;
+modal.onclick = e => e.target === modal && closeModal();
+
+/* LIMITED ACCESS MODAL */
+document.querySelectorAll('.modal-trigger').forEach(el => {
+  el.onclick = e => {
+    e.preventDefault();
+    title.textContent = 'Account Limited Access';
+    body.innerHTML = `
+      <p>Your account has limited access.</p>
+      <p><strong>Support:</strong> +44 7520 637897</p>
+    `;
+    openModal();
+  };
+});
+
+/* DETAILS MODAL */
+document.querySelectorAll('.details-btn').forEach(btn => {
+  btn.onclick = e => {
+    e.preventDefault();
+    title.textContent = 'Account Details';
+    body.innerHTML = `
+      <p><strong>Account Type:</strong> ${btn.dataset.type}</p>
+      <p><strong>Owner:</strong> ${btn.dataset.owner}</p>
+      <p><strong>Account Number:</strong> ${btn.dataset.number}</p>
+      <p class="disclaimer">⚠ Access limited — some features unavailable</p>
+    `;
+    openModal();
+  };
+});
+</script>
+
+</body>
+</html>
